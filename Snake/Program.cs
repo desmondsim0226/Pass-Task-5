@@ -69,6 +69,12 @@ namespace Snake
                 Console.SetCursorPosition(obstacle.col, obstacle.row);
                 Console.Write("=");
             }
+            //Game start sound effect
+            SoundPlayer sound1;
+            {
+                sound1 = new SoundPlayer("gamestart.wav");
+                sound1.Play();
+            }
 
             Queue<Position> snakeElements = new Queue<Position>();
             //change 5 to 3 to make the default size of the snake to 3 upon start
@@ -165,6 +171,9 @@ namespace Snake
                 // feeding the snake
                 if (snakeNewHead.col == food.col && snakeNewHead.row == food.row) //if snake head's coordinates is same with food
                 {
+                    //Snake eat food sound effect
+                    SoundPlayer sound3 = new SoundPlayer("food.wav");
+                    sound3.Play();
                     //add one point when food is eaten
                     userPoints++;
                     //creates new food 
