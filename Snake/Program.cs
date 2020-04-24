@@ -156,13 +156,7 @@ namespace Snake
                     //When the snake hit the obstacle sound effect (Game Over)
                      SoundPlayer sound1 = new SoundPlayer("die.wav");
                      sound1.Play();
-
-                    //Re-position the the result
-                    string statuspoint = "Your points are: {0}";
-                    Console.SetCursorPosition((Console.WindowWidth - statuspoint.Length) / 2, (Console.WindowHeight / 2) - 1);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(statuspoint, userPoints);
-
+                    
                     // Re-position the "game over" text at the center of the screen as shown in Figure 1.
                     string gameover = "Game over!";
                     Console.SetCursorPosition((Console.WindowWidth - gameover.Length) / 2, (Console.WindowHeight / 2) - 2);
@@ -170,11 +164,25 @@ namespace Snake
                     Console.WriteLine(gameover);
                     Console.ReadLine();
 
+                    //Re-position the the result
+                    string statuspoint = "Your points are: {0}";
+                    Console.SetCursorPosition((Console.WindowWidth - statuspoint.Length) / 2, (Console.WindowHeight / 2) - 1);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(statuspoint, userPoints);                    
+
+                    //Add instructions at the end of the game and re-position it
+                    string endmsg = "Press enter to exit the game!";
+                    Console.SetCursorPosition((Console.WindowWidth - endmsg.Length) / 2, (Console.WindowHeight / 2));
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(endmsg);
+                    Console.ReadLine();
+
                     using (StreamWriter file = new StreamWriter("Score.txt", true))
                     {
                         file.WriteLine("Score: " + userPoints + "\tSnake Length: " + snakeElements.Count + "\tLOSS");
                     }
                     return;
+                    
                 } else if (userPoints == 10) //winning condition
                 {
                     //Game Start sound effect
