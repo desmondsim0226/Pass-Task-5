@@ -247,10 +247,22 @@ namespace Snake
                 snakeElements.Enqueue(snakeNewHead);
                 Console.SetCursorPosition(snakeNewHead.col, snakeNewHead.row);
                 Console.ForegroundColor = ConsoleColor.Gray;
-                if (direction == right) Console.Write(">");
-                if (direction == left) Console.Write("<");
-                if (direction == up) Console.Write("^");
-                if (direction == down) Console.Write("v");               
+                if (direction == right)
+                {
+                    Console.Write(">");
+                }
+                if (direction == left)
+                {
+                    Console.Write("<");
+                }
+                if (direction == up)
+                {
+                    Console.Write("^");
+                }
+                if (direction == down)
+                {
+                    Console.Write("v");
+                }               
                 
                 // feeding the snake
                 if (snakeNewHead.col == food.col && snakeNewHead.row == food.row) //if snake head's coordinates is same with food
