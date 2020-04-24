@@ -179,7 +179,7 @@ namespace Snake
                     
                     //Add instructions at the end of the game and re-position it
                     string endmsg = "Press enter to exit the game!";
-                    Console.SetCursorPosition((Console.WindowWidth - endmsg.Length) / 2, (Console.WindowHeight / 2));
+                    Console.SetCursorPosition((Console.WindowWidth - endmsg.Length) / 2, (Console.WindowHeight / 2) - 1);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(endmsg);
                     Console.ReadLine();
