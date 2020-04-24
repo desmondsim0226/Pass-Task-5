@@ -192,7 +192,7 @@ namespace Snake
                     
                 } else if (userPoints == 10) //winning condition
                 {
-                    //Game Start sound effect
+                    //Game Winning sound effect
                     SoundPlayer sound2 = new SoundPlayer("gamestart.wav");
                     sound2.Play();
                     string winning = "CONGRATULATIONS YOU WIN!";
