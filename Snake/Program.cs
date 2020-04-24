@@ -215,7 +215,7 @@ namespace Snake
                     
                 } else if (userPoints == 10) //winning condition
                 {
-                    //Game Start sound effect
+                    //This sound plays when the player wins
                     SoundPlayer sound2 = new SoundPlayer("gamestart.wav");
                     sound2.Play();
 
