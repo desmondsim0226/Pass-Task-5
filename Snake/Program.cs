@@ -10,6 +10,7 @@ using System.ComponentModel;
 //System or library for adding media
 using System.Media;
 //namespace
+
 namespace Snake
 {
     struct Position
@@ -25,6 +26,7 @@ namespace Snake
         //this is a structure type entity which holds the data for various positions which will be used as the coordinates on the console screen
     }
 
+    
     class Program
     {
 
