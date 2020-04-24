@@ -43,7 +43,7 @@ namespace Snake
             int userPoints = 0;
             double sleepTime = 100;
            
-            //Background Music 
+            //Looping Background Music  
             SoundPlayer backgroundMusic = new SoundPlayer("faded.wav");
             backgroundMusic.PlayLooping();
 
