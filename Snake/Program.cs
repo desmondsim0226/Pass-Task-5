@@ -202,10 +202,10 @@ namespace Snake
                     Console.WriteLine(statuspoint, userPoints);                    
                     
                     //Add instructions at the end of the game and re-position it
-                    string endmsg = "Press enter to exit the game!";
-                    Console.SetCursorPosition((Console.WindowWidth - endmsg.Length) / 2, (Console.WindowHeight / 2));
+                    string msg = "Press enter to exit the game!";
+                    Console.SetCursorPosition((Console.WindowWidth - msg.Length) / 2, (Console.WindowHeight / 2));
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(endmsg);
+                    Console.WriteLine(msg);
                     Console.ReadLine();
                     
                     using (StreamWriter file = new StreamWriter("Score.txt", true))
