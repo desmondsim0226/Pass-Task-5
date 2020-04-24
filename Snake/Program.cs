@@ -7,6 +7,7 @@ using System.Collections;
 using System.IO;
 using System.Threading;
 using System.ComponentModel;
+//System or library for adding media
 using System.Media;
 //namespace
 namespace Snake
@@ -40,7 +41,7 @@ namespace Snake
             int negativePoints = 0;
             int userPoints = 0;
 
-            //Background Music
+            //Background Music 
             SoundPlayer backgroundMusic = new SoundPlayer("faded.wav");
             backgroundMusic.PlayLooping();
 
@@ -176,6 +177,7 @@ namespace Snake
                     return;
                 } else if (userPoints == 10) //winning condition
                 {
+                    //Game Start sound effect
                     SoundPlayer sound2 = new SoundPlayer("gamestart.wav");
                     sound2.Play();
                     string winning = "CONGRATULATIONS YOU WIN!";
