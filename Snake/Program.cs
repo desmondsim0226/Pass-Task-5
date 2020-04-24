@@ -41,6 +41,7 @@ namespace Snake
             int negativePoints = 0;
             int userPoints = 0;
 
+            
             //Background Music 
             SoundPlayer backgroundMusic = new SoundPlayer("faded.wav");
             backgroundMusic.PlayLooping();
@@ -54,7 +55,9 @@ namespace Snake
                 new Position(-1, 0), // up
             };
             
+            
             double sleepTime = 100;
+            
             
             int direction = right; //this defaults the snake's direction to right when the game starts
             Random randomNumbersGenerator = new Random();
@@ -72,6 +75,7 @@ namespace Snake
                 new Position(randomNumbersGenerator.Next(0, Console.WindowHeight), randomNumbersGenerator.Next(0, Console.WindowWidth)),
             };
 
+            
             // For loop for creating the obstacles
             foreach (Position obstacle in obstacles)
             {
@@ -88,6 +92,7 @@ namespace Snake
                 snakeElements.Enqueue(new Position(0, i));
             }
             
+            
             //creating food item
             Position food;
             do
@@ -100,6 +105,7 @@ namespace Snake
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("@");
 
+            
             foreach (Position position in snakeElements)
             {
                 Console.SetCursorPosition(position.col, position.row);
@@ -107,6 +113,7 @@ namespace Snake
                 Console.Write("*");
             }//the body of the snake
 
+            
             while (true)
             {
                 negativePoints++;
@@ -133,29 +140,34 @@ namespace Snake
                 }
                 //apart from giving the snake directions on where to move, it also ensures that the snake doesnt move the opposite direction directly
 
+                
                 Position snakeHead = snakeElements.Last();
                 Position nextDirection = directions[direction];
 
                 Position snakeNewHead = new Position(snakeHead.row + nextDirection.row,
-                    snakeHead.col + nextDirection.col);
+                snakeHead.col + nextDirection.col);
 
+                
                 if (snakeNewHead.col < 0) snakeNewHead.col = Console.WindowWidth - 1;
                 if (snakeNewHead.row < 0) snakeNewHead.row = Console.WindowHeight - 1;
                 if (snakeNewHead.row >= Console.WindowHeight) snakeNewHead.row = 0;
                 if (snakeNewHead.col >= Console.WindowWidth) snakeNewHead.col = 0;
                 //when the snake collides with a wall, it will in turn appear at the opposite side of the wall
 
+                
                 Console.SetCursorPosition(0, 0);
                 Console.ForegroundColor = ConsoleColor.White;
                 //if (userPoints < 0) userPoints = 0;
                 userPoints = Math.Max(userPoints, 0);
                 Console.WriteLine("Your points are: {0} \t REACH 10 POINTS TO WIN", userPoints);
 
+                
                 if (snakeElements.Contains(snakeNewHead) || obstacles.Contains(snakeNewHead))
                 {
                     //When the snake hit the obstacle sound effect (Game Over)
                      SoundPlayer sound1 = new SoundPlayer("die.wav");
                      sound1.Play();
+                    
                     
                     // Re-position the "game over" text at the center of the screen as shown in Figure 1.
                     string gameover = "Game over!";
@@ -164,12 +176,14 @@ namespace Snake
                     Console.WriteLine(gameover);
                     Console.ReadLine();
 
+                    
                     //Re-position the the result
                     string statuspoint = "Your points are: {0}";
                     Console.SetCursorPosition((Console.WindowWidth - statuspoint.Length) / 2, (Console.WindowHeight / 2) - 1);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(statuspoint, userPoints);                    
 
+                    
                     //Add instructions at the end of the game and re-position it
                     string endmsg = "Press enter to exit the game!";
                     Console.SetCursorPosition((Console.WindowWidth - endmsg.Length) / 2, (Console.WindowHeight / 2));
@@ -177,11 +191,13 @@ namespace Snake
                     Console.WriteLine(endmsg);
                     Console.ReadLine();
 
+                    
                     using (StreamWriter file = new StreamWriter("Score.txt", true))
                     {
                         file.WriteLine("Score: " + userPoints + "\tSnake Length: " + snakeElements.Count + "\tLOSS");
                     }
                     return;
+                    
                     
                 } else if (userPoints == 10) //winning condition
                 {
@@ -201,10 +217,12 @@ namespace Snake
                 }
                 //this is the game over scene after the player loses the game either by the snake colliding with itself or the snake colliding with obstacles
                 
+                
                 Console.SetCursorPosition(snakeHead.col, snakeHead.row);
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write("*");
 
+                
                 snakeElements.Enqueue(snakeNewHead);
                 Console.SetCursorPosition(snakeNewHead.col, snakeNewHead.row);
                 Console.ForegroundColor = ConsoleColor.Gray;
@@ -214,6 +232,7 @@ namespace Snake
                 if (direction == down) Console.Write("v");
                 //whenever the snake changes direction, the head of the snake changes according to the direction
 
+                
                 // feeding the snake
                 if (snakeNewHead.col == food.col && snakeNewHead.row == food.row) //if snake head's coordinates is same with food
                 {
@@ -237,6 +256,7 @@ namespace Snake
                     Console.Write("@");
                     sleepTime--;
 
+                    
                     //creates new obstacle
                     Position obstacle = new Position();
                     do
@@ -260,6 +280,7 @@ namespace Snake
                     Console.Write(" ");
                 }
 
+                
                 if (Environment.TickCount - lastFoodTime >= foodDissapearTime)
                 {
                     negativePoints = negativePoints + 50;
@@ -274,12 +295,15 @@ namespace Snake
                     lastFoodTime = Environment.TickCount;
                 }
 
+                
                 Console.SetCursorPosition(food.col, food.row);
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("@");
 
+                
                 sleepTime -= 0.01;
 
+                
                 Thread.Sleep((int)sleepTime);
             }
         }
