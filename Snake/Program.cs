@@ -225,8 +225,8 @@ namespace Snake
                 {
                     //Snake eat food sound effect
                     SoundPlayer sound3 = new SoundPlayer("food.wav");
-                    backgroundMusic.PlayLooping();
-                    sound3.Play();          
+                    sound3.Play();    
+                    
                     //add one point when food is eaten
                     userPoints++;
                     
