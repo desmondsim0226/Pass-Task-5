@@ -43,7 +43,7 @@ namespace Snake
             int userPoints = 0;
             double sleepTime = 100;
            
-            //Looping Background Music  
+            //Background Music 
             SoundPlayer backgroundMusic = new SoundPlayer("faded.wav");
             backgroundMusic.PlayLooping();
 
@@ -121,19 +121,31 @@ namespace Snake
                     ConsoleKeyInfo userInput = Console.ReadKey();
                     if (userInput.Key == ConsoleKey.LeftArrow)
                     {
-                        if (direction != right) direction = left;
+                        if (direction != right)
+                        {
+                            direction = left;
+                        }
                     }
                     if (userInput.Key == ConsoleKey.RightArrow)
                     {
-                        if (direction != left) direction = right;
+                        if (direction != left)
+                        {
+                            direction = right;
+                        }
                     }
                     if (userInput.Key == ConsoleKey.UpArrow)
                     {
-                        if (direction != down) direction = up;
+                        if (direction != down)
+                        {
+                            direction = up;
+                        }
                     }
                     if (userInput.Key == ConsoleKey.DownArrow)
                     {
-                        if (direction != up) direction = down;
+                        if (direction != up)
+                        {
+                            direction = down;
+                        }
                     }
                 }
                 //apart from giving the snake directions on where to move, it also ensures that the snake doesnt move the opposite direction directly
@@ -145,10 +157,22 @@ namespace Snake
                 snakeHead.col + nextDirection.col);
 
                 //when the snake collides with a wall, it will in turn appear at the opposite side of the wall
-                if (snakeNewHead.col < 0) snakeNewHead.col = Console.WindowWidth - 1;
-                if (snakeNewHead.row < 0) snakeNewHead.row = Console.WindowHeight - 1;
-                if (snakeNewHead.row >= Console.WindowHeight) snakeNewHead.row = 0;
-                if (snakeNewHead.col >= Console.WindowWidth) snakeNewHead.col = 0;               
+                if (snakeNewHead.col < 0)
+                {
+                    snakeNewHead.col = Console.WindowWidth - 1;
+                }
+                if (snakeNewHead.row < 0)
+                {
+                    snakeNewHead.row = Console.WindowHeight - 1;
+                }
+                if (snakeNewHead.row >= Console.WindowHeight)
+                {
+                    snakeNewHead.row = 0;
+                }
+                if (snakeNewHead.col >= Console.WindowWidth)
+                {
+                    snakeNewHead.col = 0;
+                }
                 
                 //This is to display the player score
                 Console.SetCursorPosition(0, 0);
@@ -192,14 +216,23 @@ namespace Snake
                     
                 } else if (userPoints == 10) //winning condition
                 {
-                    //Game Winning sound effect
+                    //Game Start sound effect
                     SoundPlayer sound2 = new SoundPlayer("gamestart.wav");
                     sound2.Play();
+
+                    //Declare that the player wins in the middle of the screen
                     string winning = "CONGRATULATIONS YOU WIN!";
                     Console.SetCursorPosition((Console.WindowWidth - winning.Length) / 2, (Console.WindowHeight/ 2)-1);
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine(winning);
+                    
+                    //Add instructions at the end of the game and re-position it
+                    string endmsg = "Press enter to exit the game!";
+                    Console.SetCursorPosition((Console.WindowWidth - endmsg.Length) / 2, (Console.WindowHeight / 2));
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(endmsg);
                     Console.ReadLine();
+
                     using (StreamWriter file = new StreamWriter("Score.txt", true))
                     {
                         file.WriteLine("Score: " + userPoints + "\tSnake Length:" + snakeElements.Count + "\tWIN");
@@ -225,8 +258,8 @@ namespace Snake
                 {
                     //Snake eat food sound effect
                     SoundPlayer sound3 = new SoundPlayer("food.wav");
-                    sound3.Play();    
-                    
+                    backgroundMusic.PlayLooping();
+                    sound3.Play();          
                     //add one point when food is eaten
                     userPoints++;
                     
