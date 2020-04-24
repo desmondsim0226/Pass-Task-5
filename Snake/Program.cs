@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.IO;
 using System.Threading;
-
+using System.ComponentModel;
+using System.Media;
 //namespace
 namespace Snake
 {
@@ -24,6 +26,7 @@ namespace Snake
 
     class Program
     {
+
         //the main compiler
         static void Main(string[] args)
         {
@@ -32,9 +35,15 @@ namespace Snake
             byte down = 2;
             byte up = 3;
             int lastFoodTime = 0;
-            int foodDissapearTime = 8000;
+            //The food relocate's timer
+            int foodDissapearTime = 15000;
             int negativePoints = 0;
             int userPoints = 0;
+
+            //Background Music
+            SoundPlayer backgroundMusic = new SoundPlayer("faded.wav");
+            backgroundMusic.PlayLooping();
+
 
             Position[] directions = new Position[]
             {
@@ -55,13 +64,13 @@ namespace Snake
             List<Position> obstacles = new List<Position>()
             {
                 //5 obstacles have been created while the game start running with different position
-                new Position(12, 12),
-                new Position(14, 20),
-                new Position(7, 7),
-                new Position(19, 19),
-                new Position(6, 9),
+                new Position(randomNumbersGenerator.Next(0, Console.WindowHeight), randomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(randomNumbersGenerator.Next(0, Console.WindowHeight), randomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(randomNumbersGenerator.Next(0, Console.WindowHeight), randomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(randomNumbersGenerator.Next(0, Console.WindowHeight), randomNumbersGenerator.Next(0, Console.WindowWidth)),
+                new Position(randomNumbersGenerator.Next(0, Console.WindowHeight), randomNumbersGenerator.Next(0, Console.WindowWidth)),
             };
-            
+
             // For loop for creating the obstacles
             foreach (Position obstacle in obstacles)
             {
@@ -69,13 +78,8 @@ namespace Snake
                 Console.SetCursorPosition(obstacle.col, obstacle.row);
                 Console.Write("=");
             }
-            //Game start sound effect
-            SoundPlayer sound1;
-            {
-                sound1 = new SoundPlayer("gamestart.wav");
-                sound1.Play();
-            }
 
+        
             Queue<Position> snakeElements = new Queue<Position>();
             //change 5 to 3 to make the default size of the snake to 3 upon start
             for (int i = 0; i <= 3; i++)
@@ -141,16 +145,48 @@ namespace Snake
                 //when the snake collides with a wall, it will in turn appear at the opposite side of the wall
 
                 Console.SetCursorPosition(0, 0);
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
                 //if (userPoints < 0) userPoints = 0;
                 userPoints = Math.Max(userPoints, 0);
-                Console.WriteLine("Your points are: {0}", userPoints);
+                Console.WriteLine("Your points are: {0} \t REACH 10 POINTS TO WIN", userPoints);
 
                 if (snakeElements.Contains(snakeNewHead) || obstacles.Contains(snakeNewHead))
                 {
-                    
-                    Console.WriteLine("Game over!");
+                    //When the snake hit the obstacle sound effect (Game Over)
+                     SoundPlayer sound1 = new SoundPlayer("die.wav");
+                     sound1.Play();
+
+                    //Re-position the the result
+                    string statuspoint = "Your points are: {0}";
+                    Console.SetCursorPosition((Console.WindowWidth - statuspoint.Length) / 2, (Console.WindowHeight / 2) - 1);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(statuspoint, userPoints);
+
+                    // Re-position the "game over" text at the center of the screen as shown in Figure 1.
+                    string gameover = "Game over!";
+                    Console.SetCursorPosition((Console.WindowWidth - gameover.Length) / 2, (Console.WindowHeight / 2) - 2);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(gameover);
                     Console.ReadLine();
+
+                    using (StreamWriter file = new StreamWriter("Score.txt", true))
+                    {
+                        file.WriteLine("Score: " + userPoints + "\tSnake Length: " + snakeElements.Count + "\tLOSS");
+                    }
+                    return;
+                } else if (userPoints == 10) //winning condition
+                {
+                    SoundPlayer sound2 = new SoundPlayer("gamestart.wav");
+                    sound2.Play();
+                    string winning = "CONGRATULATIONS YOU WIN!";
+                    Console.SetCursorPosition((Console.WindowWidth - winning.Length) / 2, (Console.WindowHeight/ 2)-1);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(winning);
+                    Console.ReadLine();
+                    using (StreamWriter file = new StreamWriter("Score.txt", true))
+                    {
+                        file.WriteLine("Score: " + userPoints + "\tSnake Length:" + snakeElements.Count + "\tWIN");
+                    }
                     return;
                 }
                 //this is the game over scene after the player loses the game either by the snake colliding with itself or the snake colliding with obstacles
@@ -173,6 +209,8 @@ namespace Snake
                 {
                     //Snake eat food sound effect
                     SoundPlayer sound3 = new SoundPlayer("food.wav");
+
+                    backgroundMusic.PlayLooping();
                     sound3.Play();
                     //add one point when food is eaten
                     userPoints++;
