@@ -193,7 +193,6 @@ namespace Snake
                     Console.SetCursorPosition((Console.WindowWidth - gameover.Length) / 2, (Console.WindowHeight / 2) - 2);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(gameover);
-                    Console.ReadLine();
                     
                     //Re-position the the result
                     string statuspoint = "Your points are: {0}";
