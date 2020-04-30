@@ -9,12 +9,16 @@ using System.Threading;
 using System.ComponentModel;
 //System or library for adding media
 using System.Media;
+using System.Windows.Media;
+using System.Net;
 
 //namespace
 namespace Snake
 {
+    
     struct Position
     {
+       
         //Variable
         public int row;
         public int col;
@@ -24,8 +28,9 @@ namespace Snake
             this.col = col;
         }
         //this is a structure type entity which holds the data for various positions which will be used as the coordinates on the console screen
+       
     }
-
+   
     
     class Program
     {
@@ -42,11 +47,18 @@ namespace Snake
             int negativePoints = 0;
             int userPoints = 0;
             double sleepTime = 100;
-           
-            //Background Music 
-            SoundPlayer backgroundMusic = new SoundPlayer("faded.wav");
-            backgroundMusic.PlayLooping();
 
+
+
+            
+            //Background Music (Looping)
+            //Continue the background music after snake eat the food
+            MediaPlayer backgroundMusic = new MediaPlayer();
+            backgroundMusic.Open(new System.Uri(Path.Combine(System.IO.Directory.GetCurrentDirectory(), "faded.wav")));
+            
+           
+          
+       
             Position[] directions = new Position[]
             {
                 new Position(0, 1), // right
@@ -114,7 +126,13 @@ namespace Snake
             while (true)
             {
                 negativePoints++;
-                
+                //background music (looping)
+                backgroundMusic.Play();
+                if (backgroundMusic.Position >= new TimeSpan(0, 0, 29))
+                {
+                    backgroundMusic.Position = new TimeSpan(0, 0, 0);
+                }
+
                 //control keys
                 if (Console.KeyAvailable)
                 {
@@ -269,7 +287,6 @@ namespace Snake
                 {
                     //Snake eat food sound effect
                     SoundPlayer sound3 = new SoundPlayer("food.wav");
-                    backgroundMusic.PlayLooping();
                     sound3.Play();          
                     //add one point when food is eaten
                     userPoints++;

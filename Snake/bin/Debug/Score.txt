@@ -1,1 +1,5 @@
 Score: 10	Snake Length:14	WIN
+Score: 0	Snake Length: 4	LOSS
+Score: 2	Snake Length: 6	LOSS
+Score: 3	Snake Length: 7	LOSS
+Score: 7	Snake Length: 11	LOSS
